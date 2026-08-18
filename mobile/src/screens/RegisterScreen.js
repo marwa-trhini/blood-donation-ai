@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,9 +9,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
   ActivityIndicator,
   View,
 } from 'react-native';
@@ -21,6 +18,8 @@ import {
   isValidEmailFormat,
   validateRegistrationFields,
 } from '../utils/validation';
+import KeyboardAwareScrollForm from '../components/KeyboardAwareScrollForm';
+import { getVisibleTextInputProps } from '../utils/keyboardHelpers';
 
 const EMAIL_CHECK_DEBOUNCE_MS = 600;
 const DUPLICATE_EMAIL_MESSAGE =
@@ -89,7 +88,13 @@ function RegisterInput({
   onBlur,
   onFocus,
   focused = false,
+  onFieldFocus,
 }) {
+  const handleFocus = (event) => {
+    onFocus?.(event);
+    onFieldFocus?.();
+  };
+
   return (
     <View style={[styles.inputWrap, focused && styles.inputWrapFocused]}>
       <Ionicons name={icon} size={20} color={focused ? COLORS.primary : COLORS.textSecondary} style={styles.inputIcon} />
@@ -105,7 +110,8 @@ function RegisterInput({
         autoCapitalize={autoCapitalize}
         autoCorrect={autoCorrect}
         onBlur={onBlur}
-        onFocus={onFocus}
+        onFocus={handleFocus}
+        {...getVisibleTextInputProps({ cursorColor: COLORS.primary })}
       />
       {showSecureToggle ? (
         <TouchableOpacity
@@ -131,6 +137,12 @@ export default function RegisterScreen() {
   const navigation = useNavigation();
   const scrollRef = useRef(null);
   const emailCheckRequestId = useRef(0);
+
+  const scrollFocusedFieldIntoView = useCallback(() => {
+    requestAnimationFrame(() => {
+      scrollRef.current?.scrollToEnd({ animated: true });
+    });
+  }, []);
 
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -282,19 +294,15 @@ export default function RegisterScreen() {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="dark" />
 
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        <View style={styles.screenBody}>
-          <RegisterDecor />
+      <View style={styles.screenBody}>
+        <RegisterDecor />
 
-          <ScrollView
-            ref={scrollRef}
-            contentContainerStyle={styles.scrollContent}
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-          >
+        <KeyboardAwareScrollForm
+          scrollRef={scrollRef}
+          style={styles.formScroll}
+          contentContainerStyle={styles.scrollContent}
+          extraBottomPadding={SPACING.lg}
+        >
             <View style={styles.content}>
               <View style={styles.header}>
                 <View style={styles.logoWrap}>
@@ -387,6 +395,7 @@ export default function RegisterScreen() {
                   focused={focusedField === 'password'}
                   onFocus={() => setFocusedField('password')}
                   onBlur={() => setFocusedField('')}
+                  onFieldFocus={scrollFocusedFieldIntoView}
                 />
 
                 <RegisterInput
@@ -402,6 +411,7 @@ export default function RegisterScreen() {
                   focused={focusedField === 'confirmPassword'}
                   onFocus={() => setFocusedField('confirmPassword')}
                   onBlur={() => setFocusedField('')}
+                  onFieldFocus={scrollFocusedFieldIntoView}
                 />
 
                 <TouchableOpacity
@@ -430,9 +440,8 @@ export default function RegisterScreen() {
                 </Text>
               </TouchableOpacity>
             </View>
-          </ScrollView>
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAwareScrollForm>
+      </View>
     </SafeAreaView>
   );
 }
@@ -450,7 +459,11 @@ const styles = StyleSheet.create({
   screenBody: {
     flex: 1,
     backgroundColor: COLORS.background,
-    overflow: 'hidden',
+  },
+
+  formScroll: {
+    flex: 1,
+    zIndex: 1,
   },
 
   decorWrap: {

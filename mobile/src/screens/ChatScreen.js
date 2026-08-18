@@ -1,11 +1,9 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   ActivityIndicator,
-  KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
@@ -21,6 +19,9 @@ import {
   markChatMessagesAsRead,
   sendChatMessage,
 } from '../services/api';
+import ChatKeyboardLayout from '../components/ChatKeyboardLayout';
+import { useKeyboardInsets } from '../hooks/useKeyboardInsets';
+import { getVisibleTextInputProps, keyboardLayoutStyles } from '../utils/keyboardHelpers';
 
 const COLORS = {
   background: '#FAF8F6',
@@ -74,6 +75,7 @@ export default function ChatScreen() {
   const navigation = useNavigation();
   const route = useRoute();
   const scrollRef = useRef(null);
+  const { isKeyboardVisible } = useKeyboardInsets();
 
   const donationRequestId = String(route.params?.donationRequestId || '');
   const contactName = route.params?.contactName || 'Chat';
@@ -92,6 +94,12 @@ export default function ChatScreen() {
       scrollRef.current?.scrollToEnd({ animated: true });
     });
   }, []);
+
+  useEffect(() => {
+    if (isKeyboardVisible) {
+      scrollToBottom();
+    }
+  }, [isKeyboardVisible, scrollToBottom]);
 
   const loadChat = useCallback(async () => {
     if (!donationRequestId) {
@@ -177,25 +185,61 @@ export default function ChatScreen() {
     : 'BloodConnect donation chat';
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <>
       <StatusBar style="dark" />
-
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={24} color={COLORS.navy} />
-        </TouchableOpacity>
-        <View style={styles.headerContent}>
-          <Text style={styles.headerTitle}>{contactName}</Text>
-          <Text style={styles.headerSubtitle}>{subtitle}</Text>
-        </View>
-        <View style={styles.headerSpacer} />
-      </View>
-      <View style={styles.headerDivider} />
-
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 8 : 0}
+      <ChatKeyboardLayout
+        safeAreaStyle={styles.safeArea}
+        header={
+          <>
+            <View style={styles.header}>
+              <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                <Ionicons name="chevron-back" size={24} color={COLORS.navy} />
+              </TouchableOpacity>
+              <View style={styles.headerContent}>
+                <Text style={styles.headerTitle}>{contactName}</Text>
+                <Text style={styles.headerSubtitle}>{subtitle}</Text>
+              </View>
+              <View style={styles.headerSpacer} />
+            </View>
+            <View style={styles.headerDivider} />
+          </>
+        }
+        footer={
+          !loading ? (
+            <View style={styles.composerWrap}>
+              <TextInput
+                style={[styles.input, chatClosed && styles.inputDisabled]}
+                value={inputValue}
+                onChangeText={(value) => {
+                  setInputValue(value);
+                  scrollToBottom();
+                }}
+                onFocus={scrollToBottom}
+                placeholder={chatClosed ? 'Chat is closed' : 'Type a message...'}
+                placeholderTextColor={COLORS.grayLight}
+                multiline
+                maxLength={MESSAGE_MAX_LENGTH}
+                editable={!chatClosed && !submitting}
+                {...getVisibleTextInputProps({ cursorColor: COLORS.primary, multiline: true })}
+              />
+              <TouchableOpacity
+                style={[
+                  styles.sendButton,
+                  (chatClosed || submitting || !inputValue.trim()) && styles.sendButtonDisabled,
+                ]}
+                onPress={handleSend}
+                disabled={chatClosed || submitting || !inputValue.trim()}
+                activeOpacity={0.85}
+              >
+                {submitting ? (
+                  <ActivityIndicator color={COLORS.white} size="small" />
+                ) : (
+                  <Text style={styles.sendButtonText}>Send</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          ) : null
+        }
       >
         {loading ? (
           <View style={styles.loadingWrap}>
@@ -216,9 +260,12 @@ export default function ChatScreen() {
 
             <ScrollView
               ref={scrollRef}
+              style={keyboardLayoutStyles.flex}
               contentContainerStyle={styles.messagesContent}
               showsVerticalScrollIndicator={false}
               onContentSizeChange={scrollToBottom}
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
             >
               {messages.length === 0 ? (
                 <View style={styles.emptyWrap}>
@@ -234,38 +281,10 @@ export default function ChatScreen() {
                 ))
               )}
             </ScrollView>
-
-            <View style={styles.composerWrap}>
-              <TextInput
-                style={[styles.input, chatClosed && styles.inputDisabled]}
-                value={inputValue}
-                onChangeText={setInputValue}
-                placeholder={chatClosed ? 'Chat is closed' : 'Type a message...'}
-                placeholderTextColor={COLORS.grayLight}
-                multiline
-                maxLength={MESSAGE_MAX_LENGTH}
-                editable={!chatClosed && !submitting}
-              />
-              <TouchableOpacity
-                style={[
-                  styles.sendButton,
-                  (chatClosed || submitting || !inputValue.trim()) && styles.sendButtonDisabled,
-                ]}
-                onPress={handleSend}
-                disabled={chatClosed || submitting || !inputValue.trim()}
-                activeOpacity={0.85}
-              >
-                {submitting ? (
-                  <ActivityIndicator color={COLORS.white} size="small" />
-                ) : (
-                  <Text style={styles.sendButtonText}>Send</Text>
-                )}
-              </TouchableOpacity>
-            </View>
           </>
         )}
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </ChatKeyboardLayout>
+    </>
   );
 }
 
@@ -314,6 +333,9 @@ const styles = StyleSheet.create({
     color: COLORS.gray,
     textAlign: 'center',
     fontWeight: '600',
+  },
+  messagesScroll: {
+    flex: 1,
   },
   messagesContent: {
     padding: 16,
@@ -364,10 +386,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.border,
     borderRadius: 14,
     paddingHorizontal: 14,
-    paddingVertical: 10,
+    paddingTop: Platform.OS === 'android' ? 10 : 10,
+    paddingBottom: Platform.OS === 'android' ? 10 : 10,
     fontSize: 15,
+    lineHeight: 22,
     color: COLORS.navy,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.white,
   },
   inputDisabled: { backgroundColor: '#F3F4F6', color: COLORS.gray },
   sendButton: {

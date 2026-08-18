@@ -12,7 +12,7 @@ from app.recipient.field_specs import (
     REQUIRED_FIELD_SPECS,
 )
 from app.recipient.conversation_signals import classify_side_question, has_recognizable_context
-from app.recipient.medical_safety import is_medical_safety_question
+from app.recipient.medical_safety import is_medical_safety_question, is_pregnancy_context_message
 from app.recipient.message_analysis import MessageAnalysis
 from app.services.blood_compatibility import explain_can_recipient_receive_from_donor, explain_who_can_donate_to
 from app.services.recipient_intent_service import parse_compatibility_pair
@@ -99,6 +99,14 @@ class RecipientResponseBuilder:
         )
 
     def _medical_out_of_scope(self, normalized: str, analysis: MessageAnalysis) -> str:
+        if is_pregnancy_context_message(normalized) or re.search(
+            r"\bpregnan(?:t|cy)\b", normalized
+        ):
+            return (
+                "Pregnancy-related transfusion decisions must come from the treating doctor "
+                "or hospital medical team. I can help with your BloodConnect blood request "
+                "details, but I can't provide clinical guidance about pregnancy and blood needs."
+            )
         if analysis.is_medical_safety_question or re.search(
             r"\b(?:how many|how much|what amount|units?|bags?|enough)\b", normalized
         ):
@@ -334,8 +342,12 @@ class RecipientResponseBuilder:
 
     def _next_missing_required_field(self, state: RecipientConversationState) -> str | None:
         for spec in REQUIRED_FIELD_SPECS:
-            if getattr(state, spec.key, None) in (None, ""):
-                return spec.key
+            value = getattr(state, spec.key, None)
+            if value not in (None, ""):
+                continue
+            if spec.key == "hospital_name" and state.hospital_city and not state.hospital_name:
+                continue
+            return spec.key
         return None
 
     def _request_summary(self, state: RecipientConversationState) -> str:
@@ -365,6 +377,14 @@ class RecipientResponseBuilder:
         entities: ExtractedEntities,
         analysis: MessageAnalysis,
     ) -> str:
+        if (
+            state.pending_field == "hospital_name"
+            and analysis.is_ambiguous_hospital_answer
+        ):
+            return (
+                "That sounds like a city. Please tell me the hospital name "
+                "(for example, Saint George Hospital or American University Hospital)."
+            )
         if state.active_flow == ACTIVE_FLOW_BLOOD_REQUEST and state.pending_field:
             return FIELD_QUESTIONS[state.pending_field]
         if state.active_flow == ACTIVE_FLOW_BLOOD_REQUEST:

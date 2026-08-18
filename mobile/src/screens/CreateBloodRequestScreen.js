@@ -24,6 +24,12 @@ import {
   formatDateForInput,
 } from '../utils/validation';
 import {
+  getKeyboardAvoidingBehavior,
+  getVisibleTextInputProps,
+  keyboardLayoutStyles,
+  useScrollKeyboardPadding,
+} from '../utils/keyboardHelpers';
+import {
   applyReverseGeocode,
   fetchCurrentLocationGeoPoint,
   reverseGeocodePosition,
@@ -99,6 +105,7 @@ export default function CreateBloodRequestScreen() {
   const [prefillLoading, setPrefillLoading] = useState(true);
   const [bloodTypeModalVisible, setBloodTypeModalVisible] = useState(false);
   const [requestLocationCoordinates, setRequestLocationCoordinates] = useState(null);
+  const scrollKeyboardPadding = useScrollKeyboardPadding(24);
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError, setLocationError] = useState('');
   const [locationDetected, setLocationDetected] = useState(false);
@@ -328,10 +335,11 @@ export default function CreateBloodRequestScreen() {
 
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={getKeyboardAvoidingBehavior()}
       >
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
+          style={keyboardLayoutStyles.flex}
+          contentContainerStyle={[styles.scrollContent, scrollKeyboardPadding]}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >

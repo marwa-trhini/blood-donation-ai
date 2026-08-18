@@ -32,6 +32,11 @@ import {
 import BottomTabBar, { bottomTabBarSafeAreaStyle } from '../components/BottomTabBar';
 import { applyMapPickedLocation, openLocationPicker, useLocationPickerResult } from '../hooks/useLocationPicker';
 import { confirmLogout } from '../utils/authHelpers';
+import {
+  getKeyboardAvoidingBehavior,
+  keyboardLayoutStyles,
+  useScrollKeyboardPadding,
+} from '../utils/keyboardHelpers';
 
 const COLORS = {
   background: '#FFF8F8',
@@ -348,6 +353,7 @@ export default function DonorProfileScreen() {
   const [locationDetected, setLocationDetected] = useState(false);
   const [profileStep, setProfileStep] = useState('details');
   const [userFullName, setUserFullName] = useState('');
+  const scrollKeyboardPadding = useScrollKeyboardPadding(24);
 
   useEffect(() => {
     let isMounted = true;
@@ -627,10 +633,11 @@ export default function DonorProfileScreen() {
 
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={getKeyboardAvoidingBehavior()}
       >
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
+          style={keyboardLayoutStyles.flex}
+          contentContainerStyle={[styles.scrollContent, scrollKeyboardPadding]}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >

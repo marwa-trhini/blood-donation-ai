@@ -11,13 +11,12 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
 } from 'react-native';
 
 import { loginUser, resolvePostLoginScreen } from '../services/api';
 import { validateLoginFields } from '../utils/validation';
+import KeyboardAwareScrollForm from '../components/KeyboardAwareScrollForm';
+import { getVisibleTextInputProps } from '../utils/keyboardHelpers';
 
 const COLORS = {
   primary: '#8B1E2D',
@@ -95,15 +94,10 @@ export default function LoginScreen() {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="dark" />
 
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      <KeyboardAwareScrollForm
+        contentContainerStyle={styles.scrollContent}
+        extraBottomPadding={SPACING.lg}
       >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-        >
           <View style={styles.content}>
             <View style={styles.logoWrap}>
               <Text style={styles.logoIcon}>🩸</Text>
@@ -136,6 +130,7 @@ export default function LoginScreen() {
                   value={email}
                   onChangeText={setEmail}
                   editable={!loading}
+                  {...getVisibleTextInputProps({ cursorColor: COLORS.primary })}
                 />
               </View>
 
@@ -154,6 +149,7 @@ export default function LoginScreen() {
                   value={password}
                   onChangeText={setPassword}
                   editable={!loading}
+                  {...getVisibleTextInputProps({ cursorColor: COLORS.primary })}
                 />
                 <TouchableOpacity
                   style={styles.passwordToggle}
@@ -197,8 +193,7 @@ export default function LoginScreen() {
               </Text>
             </TouchableOpacity>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollForm>
     </SafeAreaView>
   );
 }

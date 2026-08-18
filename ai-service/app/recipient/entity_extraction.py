@@ -21,7 +21,14 @@ from app.recipient.conversation_signals import (
     normalize_for_analysis,
 )
 from app.recipient.location_parser import extract_location_entities
-from app.recipient.medical_safety import is_medical_safety_question
+from app.recipient.hospital_parser import (
+    apply_pending_field_scope,
+    extract_hospital_city_from_message,
+    extract_hospital_name,
+    looks_like_city_only,
+    looks_like_hospital_name,
+)
+from app.recipient.medical_safety import is_medical_safety_question, is_pregnancy_context_message
 
 WORD_NUMBERS: dict[str, int] = {
     "one": 1,
@@ -166,7 +173,9 @@ def _extract_urgency(normalized: str) -> str | None:
     return None
 
 
-def _extract_hospital_name(message: str) -> str | None:
+def _extract_hospital_name_legacy(message: str) -> str | None:
+    if re.search(r"\bhospital\s+is\s+in\b", message, re.IGNORECASE):
+        return None
     for pattern in (HOSPITAL_NAME_PATTERN, HOSPITAL_NAME_ALT):
         match = pattern.search(message)
         if match:
@@ -176,17 +185,19 @@ def _extract_hospital_name(message: str) -> str | None:
     return None
 
 
-def _extract_city(message: str, normalized: str) -> str | None:
-    hospital_city = re.search(
-        r"hospital(?:\s+is|\s+in|\s+city)?\s+(?:in\s+)?([A-Z][\w\s'-]{2,40})",
+def _extract_city(message: str, normalized: str, *, pending_field: str | None = None) -> str | None:
+    if pending_field == "hospital_name":
+        return None
+    if re.match(r"^\s*hospital\s+[A-Za-z]", message.strip(), re.IGNORECASE):
+        return None
+
+    in_match = re.search(
+        r"\b(?:in|at)\s+([A-Za-z][\w\s'-]{2,40})\b",
         message,
         re.IGNORECASE,
     )
-    if hospital_city:
-        return hospital_city.group(1).strip(" .,")
-
-    for match in CITY_IN_PATTERN.finditer(message):
-        city = match.group(1).strip(" .,")
+    if in_match:
+        city = in_match.group(1).strip(" .,")
         lowered = city.lower()
         if lowered not in {"the hospital", "a hospital", "this hospital", "my hospital"}:
             return city
@@ -219,6 +230,8 @@ def _detect_message_type(
     if any(re.search(p, normalized) for p in MEDICAL_OUT_OF_SCOPE_PATTERNS):
         return MessageType.MEDICAL_OUT_OF_SCOPE
     if is_medical_safety_question(message):
+        return MessageType.MEDICAL_OUT_OF_SCOPE
+    if is_pregnancy_context_message(message):
         return MessageType.MEDICAL_OUT_OF_SCOPE
 
     if any(re.search(p, normalized) for p in CORRECTION_MARKERS):
@@ -271,13 +284,17 @@ def extract_entities(message: str, *, pending_field: str | None = None) -> Extra
     normalized = normalize_for_analysis(message)
     entities = ExtractedEntities()
 
+    if is_pregnancy_context_message(message):
+        entities.message_type = MessageType.MEDICAL_OUT_OF_SCOPE
+        return entities
+
     entities.is_correction = any(re.search(p, normalized) for p in CORRECTION_MARKERS)
 
     if pending_field == "blood_type_needed":
         standalone = parse_standalone_blood_type_answer(message)
         if standalone:
             entities.blood_types = [standalone]
-    else:
+    elif pending_field != "blood_type_needed":
         entities.blood_types = extract_blood_types(message)
 
     entities.blood_type = entities.blood_types[0] if entities.blood_types else None
@@ -286,21 +303,39 @@ def extract_entities(message: str, *, pending_field: str | None = None) -> Extra
 
     entities.units = _extract_units(message, pending_field)
     entities.urgency = _extract_urgency(normalized)
-    entities.hospital_name = _extract_hospital_name(message)
-    entities.hospital_city = _extract_city(message, normalized)
+
+    hospital_name = extract_hospital_name(message, pending_field=pending_field)
+    if not hospital_name and pending_field != "hospital_name":
+        hospital_name = _extract_hospital_name_legacy(message)
+
+    hospital_city = extract_hospital_city_from_message(message)
+    if not hospital_city:
+        hospital_city = _extract_city(message, normalized, pending_field=pending_field)
 
     location = extract_location_entities(message, pending_field=pending_field)
     if location.hospital_city:
-        entities.hospital_city = location.hospital_city
-    if location.location_city:
-        entities.location_city = location.location_city
-    if location.location_country:
-        entities.location_country = location.location_country
+        hospital_city = location.hospital_city
+    location_city = location.location_city
+    location_country = location.location_country
 
-    if not entities.location_city:
-        entities.location_city = entities.hospital_city or _extract_city(message, normalized)
-    if not entities.location_country:
-        entities.location_country = _extract_country(message)
+    if not location_city and pending_field in {None, "location_city", "hospital_city"}:
+        location_city = hospital_city
+    if not location_country and pending_field in {None, "location_country"}:
+        location_country = _extract_country(message)
+
+    hospital_name, hospital_city, location_city, location_country = apply_pending_field_scope(
+        pending_field=pending_field,
+        hospital_name=hospital_name,
+        hospital_city=hospital_city,
+        location_city=location_city,
+        location_country=location_country,
+        is_correction=entities.is_correction,
+    )
+
+    entities.hospital_name = hospital_name
+    entities.hospital_city = hospital_city
+    entities.location_city = location_city
+    entities.location_country = location_country
 
     entities.required_date = _extract_required_date(normalized)
 

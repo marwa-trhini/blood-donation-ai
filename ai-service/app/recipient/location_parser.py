@@ -6,6 +6,22 @@ import re
 from dataclasses import dataclass
 
 # Common words that are not place names when answering pending fields.
+# Common country names for disambiguation (general list, not project-specific).
+COMMON_COUNTRY_NAMES = frozenset(
+    {
+        "afghanistan", "albania", "algeria", "argentina", "australia", "austria",
+        "bahrain", "bangladesh", "belgium", "brazil", "canada", "china", "colombia",
+        "cyprus", "denmark", "egypt", "emirates", "ethiopia", "france", "germany",
+        "greece", "india", "indonesia", "iran", "iraq", "ireland", "italy", "japan",
+        "jordan", "kenya", "kuwait", "lebanon", "libya", "malaysia", "mexico",
+        "morocco", "netherlands", "nigeria", "oman", "pakistan", "palestine",
+        "philippines", "poland", "portugal", "qatar", "romania", "russia",
+        "saudi arabia", "singapore", "south africa", "spain", "sudan", "sweden",
+        "switzerland", "syria", "tunisia", "turkey", "ukraine", "united kingdom",
+        "united states", "yemen",
+    }
+)
+
 NON_PLACE_TOKENS = frozenset(
     {
         "yes",
@@ -37,6 +53,9 @@ NON_PLACE_TOKENS = frozenset(
         "units",
         "unit",
         "hospital",
+        "continue",
+        "resume",
+        "proceed",
     }
 )
 
@@ -84,6 +103,10 @@ def _is_plausible_place(name: str) -> bool:
     if tokens[0] in NON_PLACE_TOKENS and len(tokens) == 1:
         return False
     return True
+
+
+def _is_likely_country(name: str) -> bool:
+    return name.lower().strip() in COMMON_COUNTRY_NAMES
 
 
 def _parse_standalone_place(message: str) -> str | None:
@@ -155,11 +178,19 @@ def extract_location_entities(
         if standalone:
             result.location_country = standalone
 
+    if pending_field == "hospital_city" and not result.hospital_city:
+        standalone = _parse_standalone_place(stripped)
+        if standalone and _is_likely_country(standalone):
+            result.location_country = standalone
+        elif standalone:
+            result.hospital_city = standalone
+            result.location_city = standalone
+
     if pending_field in {"location_city", "hospital_city"} and not (
         result.location_city or result.hospital_city
     ):
         standalone = _parse_standalone_place(stripped)
-        if standalone:
+        if standalone and not (pending_field == "hospital_city" and _is_likely_country(standalone)):
             result.location_city = standalone
             if pending_field == "hospital_city":
                 result.hospital_city = standalone

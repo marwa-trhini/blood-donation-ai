@@ -7,7 +7,6 @@ import pytest
 from app.models.nlp_schemas import NLPIntent
 from app.services.conversation_service import ConversationService
 from app.services.hybrid_nlp_service import HybridNLPService
-from tests.test_hybrid_llm_service import MockLLMProvider
 
 
 @pytest.fixture
@@ -207,51 +206,25 @@ class TestNoFalseConflicts:
         assert result.collected_information["days_since_last_donation"] == 180
 
 
-class TestHybridDeterministicBaseline:
-    """LLM partial extraction must not drop deterministic fields."""
+class TestDeterministicNLPBaseline:
+    """Deterministic extraction must preserve all parsed donor fields."""
 
-    def test_hybrid_fills_llm_gaps_from_deterministic(self):
-        from app.models.llm_schemas import LLMExtractionResponse
-
+    def test_deterministic_extracts_donation_history(self):
         message = (
             "I am 26 years old and 73 kg and I donated blood 6 months ago "
             "and I feel fine lately and have no fever."
         )
-        provider = MockLLMProvider(
-            extraction=LLMExtractionResponse(
-                intent=NLPIntent.PROVIDE_INFORMATION,
-                entities={
-                    "age": 26,
-                    "weight_kg": 73.0,
-                    "recent_illness": False,
-                    "fever": False,
-                },
-            )
-        )
-        hybrid = HybridNLPService(llm_provider=provider)
+        hybrid = HybridNLPService()
         result = hybrid.parse_message(message)
 
         assert result.entities["days_since_last_donation"] == 180
-        assert result.extraction_source in {"hybrid", "deterministic"}
+        assert result.extraction_source == "deterministic"
 
-    def test_hybrid_conversation_keeps_donation_history(self):
-        from app.models.llm_schemas import LLMExtractionResponse
-
+    def test_conversation_keeps_donation_history(self):
         store: dict = {}
-        provider = MockLLMProvider(
-            extraction=LLMExtractionResponse(
-                intent=NLPIntent.PROVIDE_INFORMATION,
-                entities={
-                    "age": 26,
-                    "weight_kg": 73.0,
-                    "recent_illness": False,
-                    "fever": False,
-                },
-            )
-        )
         svc = ConversationService(
             session_store=store,
-            nlp_service=HybridNLPService(llm_provider=provider),
+            nlp_service=HybridNLPService(),
         )
         message = (
             "I am 26 years old and 73 kg and I donated blood 6 months ago "
@@ -263,19 +236,11 @@ class TestHybridDeterministicBaseline:
         assert result.collected_information["days_since_last_donation"] == 180
         assert "days_since_last_donation" not in result.missing_information
 
-    def test_hybrid_no_out_of_scope_for_pending_no(self):
-        from app.models.llm_schemas import LLMExtractionResponse
-
+    def test_no_out_of_scope_for_pending_no(self):
         store: dict = {}
-        provider = MockLLMProvider(
-            extraction=LLMExtractionResponse(
-                intent=NLPIntent.UNKNOWN,
-                entities={},
-            )
-        )
         svc = ConversationService(
             session_store=store,
-            nlp_service=HybridNLPService(llm_provider=provider),
+            nlp_service=HybridNLPService(),
         )
         first = svc.handle_message("Hi")
         session_id = first.session_id
@@ -324,9 +289,7 @@ class TestMobileDonationRegression:
         assert self.DONATION_QUESTION not in (second.next_question or "")
         assert self.DONATION_QUESTION not in second.message
 
-    def test_llm_clarification_does_not_reask_when_deterministic_found_donation(self):
-        from app.models.llm_schemas import LLMExtractionResponse
-
+    def test_clarification_does_not_reask_when_donation_found(self):
         class ClarifyNLP(HybridNLPService):
             def parse_message(self, message, pending_field=None, **kwargs):
                 base = super().parse_message(
@@ -342,11 +305,7 @@ class TestMobileDonationRegression:
         store: dict = {}
         svc = ConversationService(
             session_store=store,
-            nlp_service=ClarifyNLP(
-                llm_provider=type(
-                    "P", (), {"is_available": lambda self: False}
-                )()
-            ),
+            nlp_service=ClarifyNLP(),
         )
         first = svc.handle_message("Hi")
         second = svc.handle_message(

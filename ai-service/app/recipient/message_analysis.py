@@ -12,7 +12,8 @@ from app.recipient.conversation_signals import (
     normalize_for_analysis,
 )
 from app.recipient.entity_extraction import ExtractedEntities, MessageType
-from app.recipient.medical_safety import is_medical_safety_question
+from app.recipient.medical_safety import is_medical_safety_question, is_pregnancy_context_message
+from app.recipient.hospital_parser import looks_like_city_only, looks_like_hospital_name
 
 
 @dataclass
@@ -22,6 +23,7 @@ class MessageAnalysis:
     is_pending_field_answer: bool = False
     is_continue_request: bool = False
     is_medical_safety_question: bool = False
+    is_ambiguous_hospital_answer: bool = False
     direct_question_intent: str | None = None
     normalized_message: str = ""
 
@@ -87,11 +89,18 @@ def analyze_message(
         analysis.direct_question_intent = side_intent
         return analysis
 
-    if state.pending_field and not analysis.is_explicit_question:
+    if state.pending_field and not analysis.is_explicit_question and not analysis.is_continue_request:
         if _message_is_side_question_not_field_answer(message, entities, normalized):
             return analysis
         if _pending_field_has_answer(state.pending_field, entities):
             analysis.is_pending_field_answer = True
+        elif state.pending_field == "hospital_name":
+            if entities.hospital_city:
+                analysis.is_pending_field_answer = True
+            elif looks_like_hospital_name(message):
+                analysis.is_pending_field_answer = True
+            elif looks_like_city_only(message):
+                analysis.is_ambiguous_hospital_answer = True
         elif state.pending_field in {"location_country", "location_city", "hospital_city"}:
             stripped = message.strip().rstrip(".!?")
             if (

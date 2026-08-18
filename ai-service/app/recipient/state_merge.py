@@ -91,6 +91,15 @@ def merge_entities_into_state(
                 changed=changed,
             )
 
+    if "hospital_city" in changed and not state.location_city:
+        _set_field(
+            state,
+            "location_city",
+            changed["hospital_city"],
+            is_correction=is_correction,
+            changed=changed,
+        )
+
     started_request_flow = False
     if entities.request_signal or changed or state.active_flow == "blood_request":
         if state.active_flow != "blood_request" and (

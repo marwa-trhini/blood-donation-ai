@@ -67,9 +67,25 @@ def is_medical_safety_question(message: str) -> bool:
                 return True
             if re.search(r"\b(?:enough|sufficient|adequate)\b", normalized):
                 return True
-            if _MEDICAL_QUANTITY_CONTEXT.search(normalized) and re.search(
-                r"\b(?:should|must|need to|how many|how much|what amount)\b", normalized
-            ):
-                return True
-
     return False
+
+
+_PREGNANCY_CONTEXT_PATTERNS: tuple[re.Pattern[str], ...] = tuple(
+    re.compile(p, re.IGNORECASE)
+    for p in (
+        r"\b(?:i am|i'm|im|she is|she's|he is|he's|they are|we are|the patient is|"
+        r"the recipient is|my (?:wife|partner|mother|daughter|sister) is)\s+"
+        r"(?:\d+\s+(?:weeks?|months?)\s+)?pregnant\b",
+        r"\b(?:\d+\s+(?:weeks?|months?)\s+)?pregnant\b",
+        r"\bpregnant\s+(?:woman|patient|recipient|mother|mom|wife|partner)\b",
+        r"\bpregnancy\b",
+    )
+)
+
+
+def is_pregnancy_context_message(message: str) -> bool:
+    """Return True when the user shares pregnancy context requiring medical deferral."""
+    if not message or not message.strip():
+        return False
+    normalized = normalize_for_analysis(message)
+    return any(pattern.search(normalized) for pattern in _PREGNANCY_CONTEXT_PATTERNS)

@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   ActivityIndicator,
-  KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
@@ -22,11 +21,14 @@ import {
   sendAIMessage,
 } from '../services/aiService';
 import BottomTabBar, { bottomTabBarSafeAreaStyle } from '../components/BottomTabBar';
+import ChatKeyboardLayout from '../components/ChatKeyboardLayout';
 import {
   getHomeRouteForUser,
   getProfileRouteForUser,
   getRequestsRouteForUser,
 } from '../utils/authHelpers';
+import { useKeyboardInsets } from '../hooks/useKeyboardInsets';
+import { getVisibleTextInputProps, keyboardLayoutStyles } from '../utils/keyboardHelpers';
 
 const COLORS = {
   background: '#FFF8F8',
@@ -171,6 +173,7 @@ function createInitialMessages(role) {
 export default function AIAssistantScreen() {
   const navigation = useNavigation();
   const scrollRef = useRef(null);
+  const { isKeyboardVisible } = useKeyboardInsets();
 
   const [user, setUser] = useState(null);
   const [activeRole, setActiveRole] = useState(null);
@@ -234,6 +237,12 @@ export default function AIAssistantScreen() {
       scrollRef.current?.scrollToEnd({ animated: true });
     });
   }, []);
+
+  useEffect(() => {
+    if (isKeyboardVisible) {
+      scrollToBottom();
+    }
+  }, [isKeyboardVisible, scrollToBottom]);
 
   const handleNewConversation = useCallback(() => {
     setMessages(createInitialMessages(activeRole));
@@ -307,63 +316,45 @@ export default function AIAssistantScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <>
       <StatusBar style="dark" />
-
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.headerButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={24} color={COLORS.text} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>AI Assistant</Text>
-        <TouchableOpacity
-          style={styles.headerButton}
-          onPress={handleNewConversation}
-          accessibilityLabel="Start new AI conversation"
-        >
-          <Ionicons name="refresh-outline" size={22} color={COLORS.primary} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.headerDivider} />
-
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 8 : 0}
-      >
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
-        <ScrollView
-          ref={scrollRef}
-          style={styles.messagesScroll}
-          contentContainerStyle={styles.messagesContent}
-          showsVerticalScrollIndicator={false}
-          onContentSizeChange={scrollToBottom}
-          keyboardShouldPersistTaps="handled"
-        >
-          {messages.map((message) => (
-            <ChatBubble key={message.id} message={message} />
-          ))}
-
-          {submitting ? (
-            <View style={styles.typingRow}>
-              <View style={styles.typingBubble}>
-                <ActivityIndicator size="small" color={COLORS.primary} />
-                <Text style={styles.typingText}>AI is typing...</Text>
-              </View>
-            </View>
-          ) : null}
-        </ScrollView>
-
+      <ChatKeyboardLayout
+      safeAreaStyle={styles.safeArea}
+      header={
+        <>
+          <View style={styles.header}>
+            <TouchableOpacity style={styles.headerButton} onPress={() => navigation.goBack()}>
+              <Ionicons name="chevron-back" size={24} color={COLORS.text} />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>AI Assistant</Text>
+            <TouchableOpacity
+              style={styles.headerButton}
+              onPress={handleNewConversation}
+              accessibilityLabel="Start new AI conversation"
+            >
+              <Ionicons name="refresh-outline" size={22} color={COLORS.primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.headerDivider} />
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        </>
+      }
+      footer={
         <View style={styles.composerWrap}>
           <TextInput
             style={styles.input}
             value={inputValue}
-            onChangeText={setInputValue}
+            onChangeText={(value) => {
+              setInputValue(value);
+              scrollToBottom();
+            }}
+            onFocus={scrollToBottom}
             placeholder="Type your message..."
             placeholderTextColor={COLORS.textSecondary}
             multiline
             maxLength={MESSAGE_MAX_LENGTH}
             editable={!submitting}
+            {...getVisibleTextInputProps({ cursorColor: COLORS.primary, multiline: true })}
           />
           <TouchableOpacity
             style={[
@@ -381,20 +372,45 @@ export default function AIAssistantScreen() {
             )}
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      }
+      bottomBar={
+        <SafeAreaView edges={['bottom']} style={bottomTabBarSafeAreaStyle}>
+          <BottomTabBar
+            activeKey="ai"
+            navigation={navigation}
+            onHomePress={() => navigation.navigate(tabRoutes.home)}
+            onRequestsPress={() => navigation.navigate(tabRoutes.requests)}
+            onAiPress={() => navigation.navigate('AIAssistant')}
+            onMessagesPress={() => navigation.navigate('Messages')}
+            onProfilePress={() => navigation.navigate(tabRoutes.profile)}
+          />
+        </SafeAreaView>
+      }
+    >
+      <ScrollView
+        ref={scrollRef}
+        style={keyboardLayoutStyles.flex}
+        contentContainerStyle={styles.messagesContent}
+        showsVerticalScrollIndicator={false}
+        onContentSizeChange={scrollToBottom}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
+      >
+        {messages.map((message) => (
+          <ChatBubble key={message.id} message={message} />
+        ))}
 
-      <SafeAreaView edges={['bottom']} style={bottomTabBarSafeAreaStyle}>
-        <BottomTabBar
-          activeKey="ai"
-          navigation={navigation}
-          onHomePress={() => navigation.navigate(tabRoutes.home)}
-          onRequestsPress={() => navigation.navigate(tabRoutes.requests)}
-          onAiPress={() => navigation.navigate('AIAssistant')}
-          onMessagesPress={() => navigation.navigate('Messages')}
-          onProfilePress={() => navigation.navigate(tabRoutes.profile)}
-        />
-      </SafeAreaView>
-    </SafeAreaView>
+        {submitting ? (
+          <View style={styles.typingRow}>
+            <View style={styles.typingBubble}>
+              <ActivityIndicator size="small" color={COLORS.primary} />
+              <Text style={styles.typingText}>AI is typing...</Text>
+            </View>
+          </View>
+        ) : null}
+      </ScrollView>
+    </ChatKeyboardLayout>
+    </>
   );
 }
 
@@ -594,10 +610,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.border,
     borderRadius: 14,
     paddingHorizontal: 14,
-    paddingVertical: 10,
+    paddingTop: Platform.OS === 'android' ? 10 : 10,
+    paddingBottom: Platform.OS === 'android' ? 10 : 10,
     fontSize: 15,
+    lineHeight: 22,
     color: COLORS.text,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.white,
   },
   sendButton: {
     backgroundColor: COLORS.primary,
