@@ -1,0 +1,139 @@
+{
+  "dataset_rows": 200000,
+  "train_rows": 160000,
+  "test_rows": 40000,
+  "random_state": 42,
+  "test_size": 0.2,
+  "class_distribution_train": {
+    "not_eligible": 80558,
+    "needs_review": 52560,
+    "eligible": 26882
+  },
+  "class_distribution_test": {
+    "not_eligible": 20140,
+    "needs_review": 13140,
+    "eligible": 6720
+  },
+  "models_trained": [
+    "logistic_regression",
+    "logistic_regression_balanced",
+    "decision_tree",
+    "decision_tree_balanced",
+    "random_forest",
+    "random_forest_balanced"
+  ],
+  "model_families_compared": [
+    "Logistic Regression",
+    "Decision Tree",
+    "Random Forest"
+  ],
+  "experiment_summary": "We evaluated Logistic Regression, Decision Tree, and Random Forest classifiers on the same stratified train/test split and compared performance using accuracy, precision, recall, F1, macro averages, and weighted F1. Decision Tree (~100%) and Random Forest (~100%) achieved suspiciously high test scores because synthetic labels were generated from the same features. Logistic Regression (~75% Macro F1) was selected as the more conservative baseline — not because tree models are medically superior.",
+  "comparison_csv": "C:\\Projects\\BloodDonationApp\\ai-service\\artifacts\\model_comparison.csv",
+  "feature_importance_csv": "C:\\Projects\\BloodDonationApp\\ai-service\\artifacts\\feature_importance.csv",
+  "selected_model": "logistic_regression",
+  "selected_model_display": "Logistic Regression",
+  "selection_reason": "Selected Logistic Regression as the most stable baseline (Macro F1=0.7532) among models below the 99% accuracy threshold. Tree models reached ~100% accuracy, indicating synthetic rule memorization.",
+  "selected_model_metrics": {
+    "accuracy": 0.75035,
+    "macro_f1": 0.7532425196872552,
+    "per_class": {
+      "eligible": {
+        "precision": 0.6881891553938843,
+        "recall": 0.9008928571428572,
+        "f1-score": 0.7803054714184443,
+        "support": 6720
+      },
+      "needs_review": {
+        "precision": 0.7493070275558454,
+        "recall": 0.6994672754946728,
+        "f1-score": 0.7235298748327167,
+        "support": 13140
+      },
+      "not_eligible": {
+        "precision": 0.7799017795849396,
+        "recall": 0.7333167825223436,
+        "f1-score": 0.7558922128106047,
+        "support": 20140
+      }
+    }
+  },
+  "suspiciously_high_performance": false,
+  "top_features_selected_model": [
+    {
+      "model": "logistic_regression",
+      "feature": "boolean__antibiotics",
+      "importance": 12.880048
+    },
+    {
+      "model": "logistic_regression",
+      "feature": "boolean__fever",
+      "importance": 10.783117
+    },
+    {
+      "model": "logistic_regression",
+      "feature": "boolean__current_medication",
+      "importance": 10.500651
+    },
+    {
+      "model": "logistic_regression",
+      "feature": "boolean__recent_illness",
+      "importance": 7.354925
+    },
+    {
+      "model": "logistic_regression",
+      "feature": "boolean__chronic_condition_reported",
+      "importance": 5.460305
+    },
+    {
+      "model": "logistic_regression",
+      "feature": "boolean__recent_dental_procedure",
+      "importance": 4.899826
+    },
+    {
+      "model": "logistic_regression",
+      "feature": "categorical__pregnancy_status_yes",
+      "importance": 4.23036
+    },
+    {
+      "model": "logistic_regression",
+      "feature": "boolean__recent_tattoo_or_piercing",
+      "importance": 4.080166
+    },
+    {
+      "model": "logistic_regression",
+      "feature": "boolean__recent_surgery",
+      "importance": 3.550544
+    },
+    {
+      "model": "logistic_regression",
+      "feature": "boolean__recent_blood_transfusion",
+      "importance": 3.026659
+    }
+  ],
+  "class_weight_comparison": [
+    {
+      "family": "logistic_regression",
+      "default_macro_f1": 0.7532425196872552,
+      "balanced_macro_f1": 0.7507276711691279,
+      "balanced_improved_macro_f1": false,
+      "selected_variant": "logistic_regression"
+    },
+    {
+      "family": "decision_tree",
+      "default_macro_f1": 1.0,
+      "balanced_macro_f1": 1.0,
+      "balanced_improved_macro_f1": false,
+      "selected_variant": "decision_tree"
+    },
+    {
+      "family": "random_forest",
+      "default_macro_f1": 0.9999580824640284,
+      "balanced_macro_f1": 0.9999371245272854,
+      "balanced_improved_macro_f1": false,
+      "selected_variant": "random_forest"
+    }
+  ],
+  "knn_skipped_reason": "KNN skipped \u2014 160k training rows makes full-data KNN impractical.",
+  "data_leakage_note": "Labels were generated from the same tabular features using deterministic synthetic rules. High metrics reflect rule recoverability, not clinical validity.",
+  "training_seconds": 308.99
+}

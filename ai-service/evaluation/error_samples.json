@@ -1,0 +1,1352 @@
+[
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.6607,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.3393,
+      "not_eligible": 0.6607
+    },
+    "features": {
+      "age": 54,
+      "weight_kg": 54.1,
+      "days_since_last_donation": 78.0,
+      "hemoglobin_value": 11.9,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": true,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": true,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.5185,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.5185,
+      "not_eligible": 0.4815
+    },
+    "features": {
+      "age": 66,
+      "weight_kg": 79.4,
+      "days_since_last_donation": 155.0,
+      "hemoglobin_value": null,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.548,
+    "probabilities": {
+      "eligible": 0.0009,
+      "needs_review": 0.4511,
+      "not_eligible": 0.548
+    },
+    "features": {
+      "age": 29,
+      "weight_kg": 78.2,
+      "days_since_last_donation": 120.0,
+      "hemoglobin_value": 14.1,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": true,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.4956,
+    "probabilities": {
+      "eligible": 0.342,
+      "needs_review": 0.1624,
+      "not_eligible": 0.4956
+    },
+    "features": {
+      "age": 56,
+      "weight_kg": 53.6,
+      "days_since_last_donation": 141.0,
+      "hemoglobin_value": 14.0,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.7252,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.7252,
+      "not_eligible": 0.2748
+    },
+    "features": {
+      "age": 67,
+      "weight_kg": 101.4,
+      "days_since_last_donation": null,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.5365,
+    "probabilities": {
+      "eligible": 0.5365,
+      "needs_review": 0.0973,
+      "not_eligible": 0.3662
+    },
+    "features": {
+      "age": 58,
+      "weight_kg": 65.1,
+      "days_since_last_donation": 37.0,
+      "hemoglobin_value": 14.9,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.9148,
+    "probabilities": {
+      "eligible": 0.9148,
+      "needs_review": 0.0751,
+      "not_eligible": 0.0101
+    },
+    "features": {
+      "age": 70,
+      "weight_kg": 83.3,
+      "days_since_last_donation": 656.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.9644,
+    "probabilities": {
+      "eligible": 0.9644,
+      "needs_review": 0.0337,
+      "not_eligible": 0.0019
+    },
+    "features": {
+      "age": 17,
+      "weight_kg": 99.0,
+      "days_since_last_donation": 725.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "eligible",
+    "confidence": 0.4557,
+    "probabilities": {
+      "eligible": 0.4557,
+      "needs_review": 0.3613,
+      "not_eligible": 0.183
+    },
+    "features": {
+      "age": 25,
+      "weight_kg": 68.3,
+      "days_since_last_donation": 366.0,
+      "hemoglobin_value": 11.9,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.5424,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.4576,
+      "not_eligible": 0.5424
+    },
+    "features": {
+      "age": 63,
+      "weight_kg": 70.4,
+      "days_since_last_donation": null,
+      "hemoglobin_value": 13.5,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.6446,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.3554,
+      "not_eligible": 0.6446
+    },
+    "features": {
+      "age": 52,
+      "weight_kg": 60.0,
+      "days_since_last_donation": 134.0,
+      "hemoglobin_value": 13.4,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.507,
+    "probabilities": {
+      "eligible": 0.0006,
+      "needs_review": 0.4924,
+      "not_eligible": 0.507
+    },
+    "features": {
+      "age": 59,
+      "weight_kg": 69.3,
+      "days_since_last_donation": 173.0,
+      "hemoglobin_value": 12.2,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": true,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "eligible",
+    "predicted": "not_eligible",
+    "confidence": 0.4397,
+    "probabilities": {
+      "eligible": 0.2928,
+      "needs_review": 0.2675,
+      "not_eligible": 0.4397
+    },
+    "features": {
+      "age": 64,
+      "weight_kg": 73.2,
+      "days_since_last_donation": 72.0,
+      "hemoglobin_value": 12.1,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.565,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.435,
+      "not_eligible": 0.565
+    },
+    "features": {
+      "age": 29,
+      "weight_kg": 55.7,
+      "days_since_last_donation": 145.0,
+      "hemoglobin_value": 13.8,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.6332,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.6332,
+      "not_eligible": 0.3668
+    },
+    "features": {
+      "age": 66,
+      "weight_kg": 71.1,
+      "days_since_last_donation": null,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": true,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.5524,
+    "probabilities": {
+      "eligible": 0.0022,
+      "needs_review": 0.5524,
+      "not_eligible": 0.4454
+    },
+    "features": {
+      "age": 40,
+      "weight_kg": 100.3,
+      "days_since_last_donation": 49.0,
+      "hemoglobin_value": 14.0,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": true,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.5625,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.4375,
+      "not_eligible": 0.5625
+    },
+    "features": {
+      "age": 59,
+      "weight_kg": 71.4,
+      "days_since_last_donation": 97.0,
+      "hemoglobin_value": 12.6,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.8057,
+    "probabilities": {
+      "eligible": 0.8057,
+      "needs_review": 0.0929,
+      "not_eligible": 0.1014
+    },
+    "features": {
+      "age": 16,
+      "weight_kg": 87.1,
+      "days_since_last_donation": 112.0,
+      "hemoglobin_value": 14.0,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.6113,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.3887,
+      "not_eligible": 0.6113
+    },
+    "features": {
+      "age": 42,
+      "weight_kg": 75.8,
+      "days_since_last_donation": 84.0,
+      "hemoglobin_value": 14.6,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.6459,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.3541,
+      "not_eligible": 0.6459
+    },
+    "features": {
+      "age": 37,
+      "weight_kg": 53.8,
+      "days_since_last_donation": 72.0,
+      "hemoglobin_value": null,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.5287,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.5287,
+      "not_eligible": 0.4713
+    },
+    "features": {
+      "age": 28,
+      "weight_kg": 80.0,
+      "days_since_last_donation": 23.0,
+      "hemoglobin_value": null,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": true,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.5072,
+    "probabilities": {
+      "eligible": 0.5072,
+      "needs_review": 0.1491,
+      "not_eligible": 0.3437
+    },
+    "features": {
+      "age": 62,
+      "weight_kg": 73.3,
+      "days_since_last_donation": 43.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.66,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.66,
+      "not_eligible": 0.34
+    },
+    "features": {
+      "age": 34,
+      "weight_kg": 68.7,
+      "days_since_last_donation": null,
+      "hemoglobin_value": null,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": true,
+      "hemoglobin_known": false,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.8946,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.8946,
+      "not_eligible": 0.1054
+    },
+    "features": {
+      "age": 42,
+      "weight_kg": 73.4,
+      "days_since_last_donation": 548.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": true,
+      "hemoglobin_known": false,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.4878,
+    "probabilities": {
+      "eligible": 0.3372,
+      "needs_review": 0.1751,
+      "not_eligible": 0.4878
+    },
+    "features": {
+      "age": 24,
+      "weight_kg": 54.7,
+      "days_since_last_donation": 124.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.8764,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.8764,
+      "not_eligible": 0.1236
+    },
+    "features": {
+      "age": 19,
+      "weight_kg": 79.6,
+      "days_since_last_donation": 442.0,
+      "hemoglobin_value": null,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": true,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.6022,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.3978,
+      "not_eligible": 0.6022
+    },
+    "features": {
+      "age": 48,
+      "weight_kg": 54.4,
+      "days_since_last_donation": null,
+      "hemoglobin_value": 12.0,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.751,
+    "probabilities": {
+      "eligible": 0.0001,
+      "needs_review": 0.751,
+      "not_eligible": 0.2488
+    },
+    "features": {
+      "age": 56,
+      "weight_kg": 45.6,
+      "days_since_last_donation": 598.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": true,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.5309,
+    "probabilities": {
+      "eligible": 0.5309,
+      "needs_review": 0.1018,
+      "not_eligible": 0.3673
+    },
+    "features": {
+      "age": 35,
+      "weight_kg": 66.8,
+      "days_since_last_donation": 16.0,
+      "hemoglobin_value": 14.7,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.6065,
+    "probabilities": {
+      "eligible": 0.1108,
+      "needs_review": 0.2827,
+      "not_eligible": 0.6065
+    },
+    "features": {
+      "age": 22,
+      "weight_kg": 53.6,
+      "days_since_last_donation": 118.0,
+      "hemoglobin_value": 11.6,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.5062,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.4938,
+      "not_eligible": 0.5062
+    },
+    "features": {
+      "age": 33,
+      "weight_kg": 73.9,
+      "days_since_last_donation": null,
+      "hemoglobin_value": null,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.9178,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.9178,
+      "not_eligible": 0.0822
+    },
+    "features": {
+      "age": 38,
+      "weight_kg": 68.7,
+      "days_since_last_donation": 493.0,
+      "hemoglobin_value": 10.2,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.6208,
+    "probabilities": {
+      "eligible": 0.6208,
+      "needs_review": 0.1327,
+      "not_eligible": 0.2465
+    },
+    "features": {
+      "age": 54,
+      "weight_kg": 81.1,
+      "days_since_last_donation": 31.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.5661,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.4339,
+      "not_eligible": 0.5661
+    },
+    "features": {
+      "age": 57,
+      "weight_kg": 77.7,
+      "days_since_last_donation": 82.0,
+      "hemoglobin_value": null,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.5482,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.4518,
+      "not_eligible": 0.5482
+    },
+    "features": {
+      "age": 34,
+      "weight_kg": 74.1,
+      "days_since_last_donation": 118.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.5464,
+    "probabilities": {
+      "eligible": 0.0001,
+      "needs_review": 0.4535,
+      "not_eligible": 0.5464
+    },
+    "features": {
+      "age": 18,
+      "weight_kg": 71.8,
+      "days_since_last_donation": 63.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": true,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.5362,
+    "probabilities": {
+      "eligible": 0.0002,
+      "needs_review": 0.4637,
+      "not_eligible": 0.5362
+    },
+    "features": {
+      "age": 34,
+      "weight_kg": 70.0,
+      "days_since_last_donation": 128.0,
+      "hemoglobin_value": 12.3,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": true,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.8973,
+    "probabilities": {
+      "eligible": 0.8973,
+      "needs_review": 0.0861,
+      "not_eligible": 0.0167
+    },
+    "features": {
+      "age": 67,
+      "weight_kg": 82.2,
+      "days_since_last_donation": 575.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.6876,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.6876,
+      "not_eligible": 0.3124
+    },
+    "features": {
+      "age": 37,
+      "weight_kg": 76.3,
+      "days_since_last_donation": 122.0,
+      "hemoglobin_value": 12.2,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.8379,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.8379,
+      "not_eligible": 0.1621
+    },
+    "features": {
+      "age": 63,
+      "weight_kg": 75.6,
+      "days_since_last_donation": 356.0,
+      "hemoglobin_value": 11.0,
+      "recent_illness": true,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": true,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.554,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.446,
+      "not_eligible": 0.554
+    },
+    "features": {
+      "age": 41,
+      "weight_kg": 63.5,
+      "days_since_last_donation": null,
+      "hemoglobin_value": 13.8,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.4383,
+    "probabilities": {
+      "eligible": 0.4383,
+      "needs_review": 0.1511,
+      "not_eligible": 0.4106
+    },
+    "features": {
+      "age": 45,
+      "weight_kg": 69.1,
+      "days_since_last_donation": 28.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.7217,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.2783,
+      "not_eligible": 0.7217
+    },
+    "features": {
+      "age": 30,
+      "weight_kg": 51.6,
+      "days_since_last_donation": 62.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": true,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": true,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.515,
+    "probabilities": {
+      "eligible": 0.0005,
+      "needs_review": 0.4845,
+      "not_eligible": 0.515
+    },
+    "features": {
+      "age": 25,
+      "weight_kg": 81.4,
+      "days_since_last_donation": 87.0,
+      "hemoglobin_value": 13.1,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": true,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.5302,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.5302,
+      "not_eligible": 0.4698
+    },
+    "features": {
+      "age": 16,
+      "weight_kg": 84.2,
+      "days_since_last_donation": 33.0,
+      "hemoglobin_value": 13.1,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": true,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.7656,
+    "probabilities": {
+      "eligible": 0.7656,
+      "needs_review": 0.139,
+      "not_eligible": 0.0954
+    },
+    "features": {
+      "age": 67,
+      "weight_kg": 75.6,
+      "days_since_last_donation": 320.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.6311,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.6311,
+      "not_eligible": 0.3689
+    },
+    "features": {
+      "age": 57,
+      "weight_kg": 77.9,
+      "days_since_last_donation": 46.0,
+      "hemoglobin_value": 12.5,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": true,
+      "recent_tattoo_or_piercing": true,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "needs_review",
+    "predicted": "not_eligible",
+    "confidence": 0.5579,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.4421,
+      "not_eligible": 0.5579
+    },
+    "features": {
+      "age": 59,
+      "weight_kg": 64.4,
+      "days_since_last_donation": 139.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": true,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "no"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "eligible",
+    "confidence": 0.3714,
+    "probabilities": {
+      "eligible": 0.3714,
+      "needs_review": 0.3574,
+      "not_eligible": 0.2712
+    },
+    "features": {
+      "age": 16,
+      "weight_kg": 79.0,
+      "days_since_last_donation": null,
+      "hemoglobin_value": 11.4,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": false,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": true,
+      "pregnancy_status": "not_applicable"
+    }
+  },
+  {
+    "actual": "not_eligible",
+    "predicted": "needs_review",
+    "confidence": 0.8053,
+    "probabilities": {
+      "eligible": 0.0,
+      "needs_review": 0.8053,
+      "not_eligible": 0.1947
+    },
+    "features": {
+      "age": 26,
+      "weight_kg": 46.9,
+      "days_since_last_donation": 674.0,
+      "hemoglobin_value": null,
+      "recent_illness": false,
+      "fever": false,
+      "current_medication": true,
+      "antibiotics": false,
+      "recent_surgery": false,
+      "recent_dental_procedure": false,
+      "recent_tattoo_or_piercing": false,
+      "chronic_condition_reported": false,
+      "recent_blood_transfusion": false,
+      "hemoglobin_known": false,
+      "pregnancy_status": "no"
+    }
+  }
+]

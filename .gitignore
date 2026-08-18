@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build / cache
+dist/
+build/
+.expo/
+.metro-health-check*
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# React Native
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Python
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+
+# ML artifacts — production model is committed at
+# ai-service/artifacts/donor_eligibility_model.joblib (do not ignore *.joblib globally).
+*.pkl
+*.h5
+models/trained/

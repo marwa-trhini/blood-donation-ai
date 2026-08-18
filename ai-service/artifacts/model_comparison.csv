@@ -1,0 +1,4 @@
+Model,Accuracy,Macro Precision,Macro Recall,Macro F1,Weighted F1,class_weight
+Decision Tree,1.0,1.0,1.0,1.0,1.0,none
+Logistic Regression,0.7503,0.7391,0.7779,0.7532,0.7494,none
+Random Forest,1.0,0.9999,1.0,1.0,1.0,none

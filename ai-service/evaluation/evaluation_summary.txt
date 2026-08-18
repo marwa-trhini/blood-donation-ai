@@ -1,0 +1,33 @@
+BloodConnect Donor Eligibility Model Evaluation
+====================================================
+Model: Logistic Regression
+Evaluation samples: 40,000
+Accuracy: 75.0350%
+Precision (macro): 73.9133%
+Recall (macro): 77.7892%
+F1-score (macro): 75.3243%
+Precision (weighted): 75.4444%
+Recall (weighted): 75.0350%
+F1-score (weighted): 74.9363%
+ROC-AUC (OvR macro): 90.4423%
+ROC-AUC (OvR weighted): 88.3959%
+
+Confusion Matrix (rows=actual, cols=predicted):
+Labels: ['eligible', 'needs_review', 'not_eligible']
+[[ 6054     5   661]
+ [  442  9191  3507]
+ [ 2301  3070 14769]]
+
+Confidence >= 0.55: 80.2125% (accuracy 80.8322%)
+Confidence < 0.55: 19.7875% (accuracy 51.5351%)
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    eligible     0.6882    0.9009    0.7803      6720
+needs_review     0.7493    0.6995    0.7235     13140
+not_eligible     0.7799    0.7333    0.7559     20140
+
+    accuracy                         0.7503     40000
+   macro avg     0.7391    0.7779    0.7532     40000
+weighted avg     0.7544    0.7503    0.7494     40000
