@@ -1,7 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_BASE_URL } from '../constants/api';
-
-const REQUEST_TIMEOUT_MS = 15000;
+import { API_BASE_URL, REQUEST_TIMEOUT_MS } from '../constants/api';
 
 function createApiError(message, status, data) {
   const error = new Error(message);
@@ -13,15 +11,25 @@ function createApiError(message, status, data) {
 
 function mapRequestError(error, fallbackMessage) {
   if (error?.name === 'AbortError') {
+    console.warn('[api] Request timed out:', {
+      timeoutMs: REQUEST_TIMEOUT_MS,
+      fallbackMessage,
+      hint: 'The backend may be waking up on Render (free tier cold starts can take 50+ seconds).',
+    });
     return createApiError(
-      'Request timed out. Check your connection and that the API is reachable.',
+      `The server took too long to respond (${REQUEST_TIMEOUT_MS / 1000}s). It may be waking up — please wait a moment and try again.`,
       408
     );
   }
 
   if (error?.message === 'Network request failed') {
+    console.warn('[api] Network request failed:', {
+      apiBaseUrl: API_BASE_URL,
+      fallbackMessage,
+      hint: 'Check device connectivity and that the backend URL is reachable.',
+    });
     return createApiError(
-      'Unable to reach the server. Check API_BASE_URL and that the backend is running.',
+      'Unable to reach the server. Check your internet connection and try again.',
       0
     );
   }
@@ -34,6 +42,11 @@ function mapRequestError(error, fallbackMessage) {
     return error;
   }
 
+  console.warn('[api] Unmapped request error:', {
+    name: error?.name,
+    message: error?.message,
+    fallbackMessage,
+  });
   return createApiError(fallbackMessage);
 }
 
@@ -114,6 +127,8 @@ export async function registerUser({ fullName, email, phoneNumber, password }) {
       name: error?.name,
       message: error?.message,
       status: error?.status,
+      timeoutMs: REQUEST_TIMEOUT_MS,
+      url,
     });
     throw mapRequestError(error, 'Registration failed. Please try again.');
   } finally {
@@ -171,6 +186,8 @@ export async function loginUser({ email, password }) {
       name: error?.name,
       message: error?.message,
       status: error?.status,
+      timeoutMs: REQUEST_TIMEOUT_MS,
+      url,
     });
     throw mapRequestError(error, 'Login failed. Please try again.');
   } finally {
