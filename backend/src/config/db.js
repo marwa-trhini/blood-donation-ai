@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { mongodbUri } = require('./env');
+const { mongodbUri, mongodbDbName } = require('./env');
 
 
 
@@ -8,9 +8,9 @@ async function connectDB() {
 
   try {
 
-    await mongoose.connect(mongodbUri);
+    await mongoose.connect(mongodbUri, { dbName: mongodbDbName });
 
-    console.log('MongoDB connected successfully');
+    console.log(`MongoDB connected successfully (database: ${mongodbDbName})`);
 
   } catch (error) {
 

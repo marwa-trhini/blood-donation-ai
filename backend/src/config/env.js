@@ -28,6 +28,8 @@ module.exports = {
 
   mongodbUri: requireEnv('MONGODB_URI'),
 
+  mongodbDbName: process.env.MONGODB_DB_NAME || 'BloodConnect',
+
   jwtSecret: requireEnv('JWT_SECRET'),
 
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
